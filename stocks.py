@@ -1,7 +1,7 @@
 import streamlit as st
 import yfinance as yf   # for getting stock details
 
-st.title = "Mariya's Stocks Wizard"
+st.title("Mariya's Stock Wizard!")
 
 # Get the stock symbol input from the User
 stock_symbol = st.text_input("Stock Symbol", placeholder="Enter a stock symbol")
