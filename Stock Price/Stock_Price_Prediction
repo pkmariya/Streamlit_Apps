@@ -1,0 +1,38 @@
+# Stock prices analysis and trend prediction
+
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt 
+from scipy.stats import lognorm 
+
+# Load historical stock prices data 
+data = pd.read_csv("stock_prices_new.csv")
+
+# Calculate the natural logarithm of the stock prices
+log_prices = np.log(data['price'].values)
+
+# Fit a log-normal distribution to the logarithm of the stock prices
+mu, sigma = lognorm.fit(log_prices)
+
+# Plot the log-normal distribution of logarithm of stock prices
+x = np.linspace(log_prices.min(), log_prices.max(), 100)
+y - lognorm.pdf(x, sigma, scale=np.exp(mu))
+
+plt.hist(log_prices, bins=20, normed=True, alpha =0.5, label='Historical data ')
+plt.plot(x, y, '*', label='Log-normal distribution')
+plt.xlabel('Lograithm of Stock Price')
+plt.yblabel('Probability Density')
+plt.legend()
+plt.show()
+
+
+# Forecast future stock prices using the log-normal distribution 
+num_steps = 365
+forecast_prices = np.exp(mu + sigma * np.random.standard_normal(num_steps))
+
+# Plot the forecasted stock prices
+plt.plot(forecast_prices, '*', label='Forecasted stock prices')
+plt.xlabel('Time Step')
+plt.ylabel("Stock Price")
+plt.legend()
+plt.show()
